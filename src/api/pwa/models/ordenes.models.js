@@ -56,7 +56,7 @@ const dbCluster = config.CLUSTER;
   
 const conn =  obtenerConexion(dbName, dbCluster);
 	
-const model = obtenerModelo('cat_institutes', 
+const model = obtenerModelo('Ordenes', 
 							ordenesSchemaPWA,
 						  conn, 
 						  dbName, 
