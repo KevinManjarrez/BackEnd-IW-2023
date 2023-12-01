@@ -3,7 +3,7 @@ import config from '../../../config/config';
 import obtenerConexion from '../../../config/connectionsFactory';
 import obtenerModelo from '../../../config/modelsFactory';
 
-const ordenSchemaPWA = new mongoose.Schema({
+const ordenesSchemaPWA = new mongoose.Schema({
 	
 		IdOrdenOK:{type : String},
 		IdOrdenBK: {type : String},
@@ -57,7 +57,7 @@ const dbCluster = config.CLUSTER;
 const conn =  obtenerConexion(dbName, dbCluster);
 	
 const model = obtenerModelo('cat_institutes', 
-							preciosSchema,
+							ordenesSchemaPWA,
 						  conn, 
 						  dbName, 
 						  dbCluster);
