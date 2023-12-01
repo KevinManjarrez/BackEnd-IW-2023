@@ -3,68 +3,53 @@ import config from '../../../config/config';
 import obtenerConexion from '../../../config/connectionsFactory';
 import obtenerModelo from '../../../config/modelsFactory';
 
-/*const ordenSchemaPWA = new mongoose.Schema({
+const ordenSchemaPWA = new mongoose.Schema({
 	
-	Id_OrdenOK: { type: String },
-		pedido: {
-		  _id: false,
-		  fecha_pedido: { type: String },
-		  cliente: {
-			nombre: { type: String },
-			email: { type: String },
-			telefono: { type: String },
-			direccion_envio: {
-			  calle: { type: String },
-			  ciudad: { type: String },
-			  codigo_postal: { type: String },
-			  pais: { type: String }
-			}
-		  },
-		  productos: [
-			{
-			  _id: false,
-			  nombre: { type: String },
-			  descripcion: { type: String },
-			  precio_unitario: { type: String },
-			  cantidad: { type: String },
-			  subtotal: { type: String }
+		IdOrdenOK:{type : String},
+		IdOrdenBK: {type : String},
+		IdTipoOrdenOK: {type : String},
+		IdRolOK: {type : String},
+		IdPersonaOK: {type : Number},
+		ordenes_estatus: [
+		  {
+			IdTipoEstatusOK: {type : String},
+			Actual: {type : String},
+			Observacion: {type : String},
+			detail_row: {
+				Activo: { type: String, default: 'S' },
+				Borrado: { type: String, default: 'N' },
+			  	detail_row_reg: [
+					{
+						FechaReg: { type: Date, default: Date.now },
+						UsuarioReg: { type: String },
+					}
+			  ]
 			},
-			{
-			  _id: false,
-			  nombre: { type: String },
-			  descripcion: { type: String },
-			  precio_unitario: { type: String },
-			  cantidad: { type: String },
-			  subtotal: { type: String }
-			}
-		  ],
-		  total_subtotal: { type: String },
-		  metodo_pago: {
-			tipo: { type: String },
-			ultimos_cuatro_digitos: { type: String },
-			titular: { type: String }
+			_id: false
 		  },
-		  estado_pedido: { type: String },
-		  metodo_envio: {
-			tipo: { type: String },
-			fecha_entrega_estimada: { type: String },
-			numero_seguimiento: { type: String }
+		],
+		ordenes_info_ad: [
+		  {
+			IdEtiquetaOK: { type: String },
+			IdEtiqueta: { type: String },
+			Etiqueta: { type: String },
+			Valor: { type: String },
+			IdTipoSeccionOK: { type: String },
+			Secuencia: { type: Number },
+			detail_row: {
+				Activo: { type: String, default: 'S' },
+				Borrado: { type: String, default: 'N' },
+			  	detail_row_reg: [
+					{
+						FechaReg: { type: Date},
+						UsuarioReg: { type: String },
+					}
+			  ]
+			},
+			_id: false
 		  },
-		  notas_cliente: { type: String }
-		}
-		
-
-});*/
-
-const preciosSchema = new mongoose.Schema({   
-	IdInstitutoOK: {type : String}, 
-	IdInstitutoBK: {type : String}, 
-	DesInstituto: {type : String}, 
-	Alias: {type : String}, 
-	Matriz: {type : String}, 
-	IdTipoGiroOK: {type : String}, 
-	IdInstitutoSupOK: {type : String}
-})
+		],
+});
 
 const dbName = config.DATABASE;
 const dbCluster = config.CLUSTER;
