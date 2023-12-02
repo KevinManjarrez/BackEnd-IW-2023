@@ -3,12 +3,8 @@ import config from '../../../config/config';
 import obtenerConexion from '../../../config/connectionsFactory';
 import obtenerModelo from '../../../config/modelsFactory';
 
-<<<<<<< HEAD
-const ordenSchemaPWA = new mongoose.Schema({
-=======
 const ordenesSchemaPWA = new mongoose.Schema({
 	
->>>>>>> 70b8db48a94277d52deef7bfaada5f4ad28b24d1
 		IdOrdenOK:{type : String},
 		IdOrdenBK: {type : String},
 		IdTipoOrdenOK: {type : String},
@@ -95,14 +91,9 @@ const dbName = config.DATABASE;
 const dbCluster = config.CLUSTER;
   
 const conn =  obtenerConexion(dbName, dbCluster);
-	
-<<<<<<< HEAD
-const model = obtenerModelo('cat_ordenes', 
-						  ordenSchemaPWA,
-=======
+
 const model = obtenerModelo('Ordenes', 
 							ordenesSchemaPWA,
->>>>>>> 70b8db48a94277d52deef7bfaada5f4ad28b24d1
 						  conn, 
 						  dbName, 
 						  dbCluster);
