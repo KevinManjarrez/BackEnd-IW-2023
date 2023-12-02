@@ -63,6 +63,22 @@ export const updateOrden = async (req, res, next) => {
 };
 // FIN PUT********************************************************************************************* */
 
+
+/*export const updateProduct = async (req, res, next) => {
+    try {
+        const productId = req.params.id;
+        const updateData = req.body;
+        const productUpdated = await prodServServices.updateProduct(productId,updateData);
+        if (productUpdated) {
+            productUpdated.session = null;
+            return res.status(productUpdated.status).json(productUpdated);
+        }
+    } catch (error) {
+        next(error);
+    }
+};*/
+
+
 // DELETE************************************************************************************************ */
 export const deleteOrdenOne = async (req, res, next) => {
     try {

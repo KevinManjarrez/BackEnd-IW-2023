@@ -64,7 +64,7 @@ export const getOrdenesOne = async (id) => {
         data.api = `/ordenes/${id}`;
         data.process = `Obtener un orden específico de la colección de Ordenes por su ID`;
 
-        const OrdenId = await Ordenes.findOne({ Id_OrdenOK: id });
+        const OrdenId = await Ordenes.findOne({ IdOrdenOK: id });
         if (!OrdenId) {
             data.status = 404;
             data.messageDEV = `No se encontró una orden con el ID ${id}.`;
@@ -170,7 +170,7 @@ export const updateOrden = async (id, newData) => {
         data.api = `/ordenes/${id}`;
         data.process = "Actualizar la orden en la colección de Ordenes";
 
-        const updatedOrden = await Ordenes.findOneAndUpdate({ Id_OrdenOK: id }, newData, {
+        const updatedOrden = await Ordenes.findOneAndUpdate({ IdOrdenOK: id }, newData, {
             new: true, 
         });
 
@@ -191,7 +191,7 @@ export const updateOrden = async (id, newData) => {
         if (!data.status) data.status = error.statusCode;
         let { message } = error;
         if (!data.messageDEV) data.messageDEV = message;
-        if (!data.dataRes.length === 0) data.dataRes = error;
+        if (data.dataRes.length !== 0) data.dataRes = error;
         data.messageUSR = `La actualización de la orden con ID ${id} falló`;
 
         bitacora = AddMSG(bitacora, data, 'FAIL');
@@ -205,7 +205,64 @@ export const updateOrden = async (id, newData) => {
 //==========================================FIN PUT===========================================================
 
 
-
+//===========================================PATCH===========================================================
+/*export const updateProduct = async (productId,updateData) => {
+    let bitacora = BITACORA();
+    let data = DATA();
+    try {
+        bitacora.process = 'Modificar un producto.';
+        data.process = 'Modificar un producto';
+        data.method = 'PATCH';
+        data.api = '/cat-prod-serv';
+        //Actualizar cada propiedad de updateData
+        //NOTA, si se le manda un nombre distinto de un subdocumento, no pasará nada
+        let productoUpdated = null
+        for (const obj of updateData) {
+            for (const propiedad in obj) {
+                if (obj.hasOwnProperty(propiedad)) {
+                    const updateQuery = {};
+                    updateQuery[propiedad] = obj[propiedad];
+                    try {
+                        productoUpdated = await CatProdServ.findOneAndUpdate(
+                        { IdProdServOK: productId },
+                        updateQuery,
+                        { new: true }
+                    );
+                    if (!productoUpdated) {
+                        console.error("No se encontró un documento para actualizar con ese ID,",productId);
+                        data.status = 400;
+                        data.messageDEV = 'La Actualización de un Subdocumento del producto NO fue exitoso.';
+                        throw new Error(data.messageDEV);
+                    }
+                    } catch (error) {
+                        console.error(error);
+                        data.status = 400;
+                        data.messageDEV = 'La Actualizacion de un Subdocumento del producto NO fue exitoso.';
+                        throw Error(data.messageDEV);
+                    }
+                }
+            }
+       
+        }
+        data.messageUSR = 'La Modificacion de los subdocumentos de producto SI fue exitoso.';
+        data.dataRes = productoUpdated;
+        bitacora = AddMSG(bitacora, data, 'OK', 201, true);
+        return OK(bitacora);
+    } catch (error) {
+        console.error(error)
+        if (!data.status) data.status = error.statusCode;
+        let { message } = error;
+        if (!data.messageDEV) data.messageDEV = message;
+        if (data.dataRes.length === 0) data.dataRes = error;
+        data.messageUSR =
+            'La Modificacionión del producto NO fue exitoso.' +
+            '\n' +
+            'Any operations that already occurred as part of this transaction will be rolled back.';
+        bitacora = AddMSG(bitacora, data, 'FAIL');
+        return FAIL(bitacora);
+    }
+};*/
+//==========================================FIN PATCH===========================================================
 
 
 
@@ -222,9 +279,9 @@ export const deleteOrdenOne = async (id) => {
         data.api = `/ordenes/${id}`;
         data.process = "Eliminar la orden en la colección de Ordenes";
       // Realiza la eliminación del documento en función del valor proporcionado
-      const result = await Ordenes.deleteOne({ Id_OrdenOK: id });
+      const result = await Ordenes.deleteOne({ IdOrdenOK: id });
   
-      if (result.deleteOne === 0) {
+      if (result.deletedCount === 0) {
         // Si no se encontró un documento para eliminar, lanza un error
         //throw new Error('Orden no encontrada.');
         data.status = 404;
@@ -235,7 +292,7 @@ export const deleteOrdenOne = async (id) => {
       //return { message: 'Orden eliminada correctamente.' };
       data.status = 200;
         data.messageUSR = `Orden con el ID ${id} se elimino con éxito`;
-        data.dataRes = deleteOne;
+        data.dataRes = result;
 
         bitacora = AddMSG(bitacora, data, 'OK', 200, true);
 
