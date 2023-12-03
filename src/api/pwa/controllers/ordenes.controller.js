@@ -99,12 +99,12 @@ export const deleteOrdenOne = async (req, res, next) => {
 // FIN DELETE********************************************************************************************* */
 
 
-export const updatePatchOrdenes = async (req, res, next) => {
+export const updateProductMethod = async (req, res, next) => {
     try {
         const { id } = req.params; // Obtén el ID de la entrega desde los parámetros de la solicitud
         const newData = req.body; // Obtén los nuevos datos desde el cuerpo de la solicitud
 
-        const result = await ordenesService.updatePatchOrdenes(id, newData);
+        const result = await ordenesService.updateProductMethod(id, newData);
 
         if (result.status === 200) {
             return res.status(200).json(result);
@@ -115,3 +115,4 @@ export const updatePatchOrdenes = async (req, res, next) => {
         next(error);
     }
 }
+

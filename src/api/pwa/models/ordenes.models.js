@@ -92,7 +92,7 @@ const dbCluster = config.CLUSTER;
 const conn = obtenerConexion(dbName, dbCluster);
 
 const model = obtenerModelo(
-  "Ordenes",
+  "cat_ordenes",
   ordenesSchemaPWA,
   conn,
   dbName,

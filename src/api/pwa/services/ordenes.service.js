@@ -206,51 +206,50 @@ export const updateOrden = async (id, newData) => {
 
 
 //===========================================PATCH===========================================================
-export const updatePatchOrdenes = async (id, updateData) => {
+export const updateProductMethod = async (ordenId, updateData) => {
     let bitacora = BITACORA();
     let data = DATA();
     try {
-        bitacora.process = `Modificar una orden con ID ${id}`;
-        data.process = 'Modificar una orden';
+        bitacora.process = 'Modificar un producto.';
+        data.process = 'Modificar un producto';
         data.method = 'PATCH';
-        data.api = '/ordenes/actualizar/:id';
-        let ordenUpdated = null;
-        // Convertir updateData en un array si no lo es
-        if (!Array.isArray(updateData)) {
-            updateData = Object.entries(updateData).map(([propiedad, valor]) => ({ [propiedad]: valor }));
-        }
-        for (const obj of updateData) {
+        data.api = '/cat-prod-serv';
+        //Actualizar cada propiedad de updateData
+        //NOTA, si se le manda un nombre distinto de un subdocumento, no pasará nada
+        let productoUpdated = null
+        for (const obj of Object.keys(updateData)) {
             for (const propiedad in obj) {
                 if (obj.hasOwnProperty(propiedad)) {
                     const updateQuery = {};
                     updateQuery[propiedad] = obj[propiedad];
                     try {
-                        ordenUpdated = await Ordenes.findOneAndUpdate(
-                            { IdOrdenOK: id },
-                            updateQuery,
-                            { new: true }
-                        );
-                        if (!ordenUpdated) {
-                            console.error("No se encontró un documento para actualizar con ese ID,", id);
-                            data.status = 400;
-                            data.messageDEV = 'La Actualización de un Subdocumento de la orden NO fue exitoso.';
-                            throw new Error(data.messageDEV);
-                        }
+                        productoUpdated = await Ordenes.findOneAndUpdate(
+                        { IdOrdenOK: ordenId },
+                        updateQuery,
+                        { new: true }
+                    );
+                    if (!productoUpdated) {
+                        console.error("No se encontró un documento para actualizar con ese ID,",ordenId);
+                        data.status = 400;
+                        data.messageDEV = 'La Actualización de un Subdocumento del producto NO fue exitoso.';
+                        throw new Error(data.messageDEV);
+                    }
                     } catch (error) {
                         console.error(error);
                         data.status = 400;
-                        data.messageDEV = 'La Actualizacion de un Subdocumento de la orden NO fue exitoso.';
+                        data.messageDEV = 'La Actualizacion de un Subdocumento del producto NO fue exitoso.';
                         throw Error(data.messageDEV);
                     }
                 }
             }
+       
         }
-        data.messageUSR = 'La Modificacion de los subdocumentos de la orden SI fue exitoso.';
-        data.dataRes = ordenUpdated;
+        data.messageUSR = 'La Modificacion de los subdocumentos de producto SI fue exitoso.';
+        data.dataRes = productoUpdated;
         bitacora = AddMSG(bitacora, data, 'OK', 201, true);
         return OK(bitacora);
     } catch (error) {
-        console.error(error);
+        console.error(error)
         if (!data.status) data.status = error.statusCode;
         let { message } = error;
         if (!data.messageDEV) data.messageDEV = message;
