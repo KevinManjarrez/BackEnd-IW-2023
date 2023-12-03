@@ -206,46 +206,46 @@ export const updateOrden = async (id, newData) => {
 
 
 //===========================================PATCH===========================================================
-/*export const updateProduct = async (productId,updateData) => {
+export const updatePatchOrdenes = async (id,updateData) => {
     let bitacora = BITACORA();
     let data = DATA();
     try {
-        bitacora.process = 'Modificar un producto.';
-        data.process = 'Modificar un producto';
+        bitacora.process = `Modificar una orden con ID ${id}`;
+        data.process = 'Modificar una orden';
         data.method = 'PATCH';
-        data.api = '/cat-prod-serv';
+        data.api = '/ordenes/actualizar/:id';
         //Actualizar cada propiedad de updateData
         //NOTA, si se le manda un nombre distinto de un subdocumento, no pasará nada
-        let productoUpdated = null
+        let ordenUpdated = null
         for (const obj of updateData) {
             for (const propiedad in obj) {
                 if (obj.hasOwnProperty(propiedad)) {
                     const updateQuery = {};
                     updateQuery[propiedad] = obj[propiedad];
                     try {
-                        productoUpdated = await CatProdServ.findOneAndUpdate(
-                        { IdProdServOK: productId },
+                        ordenUpdated = await Ordenes.findOneAndUpdate(
+                        { IdOrdenOK: ordenId },
                         updateQuery,
                         { new: true }
                     );
-                    if (!productoUpdated) {
-                        console.error("No se encontró un documento para actualizar con ese ID,",productId);
+                    if (!ordenUpdated) {
+                        console.error("No se encontró un documento para actualizar con ese ID,",ordenId);
                         data.status = 400;
-                        data.messageDEV = 'La Actualización de un Subdocumento del producto NO fue exitoso.';
+                        data.messageDEV = 'La Actualización de un Subdocumento de la orden NO fue exitoso.';
                         throw new Error(data.messageDEV);
                     }
                     } catch (error) {
                         console.error(error);
                         data.status = 400;
-                        data.messageDEV = 'La Actualizacion de un Subdocumento del producto NO fue exitoso.';
+                        data.messageDEV = 'La Actualizacion de un Subdocumento de la orden NO fue exitoso.';
                         throw Error(data.messageDEV);
                     }
                 }
             }
        
         }
-        data.messageUSR = 'La Modificacion de los subdocumentos de producto SI fue exitoso.';
-        data.dataRes = productoUpdated;
+        data.messageUSR = 'La Modificacion de los subdocumentos de la orden SI fue exitoso.';
+        data.dataRes = ordenUpdated;
         bitacora = AddMSG(bitacora, data, 'OK', 201, true);
         return OK(bitacora);
     } catch (error) {
@@ -261,7 +261,7 @@ export const updateOrden = async (id, newData) => {
         bitacora = AddMSG(bitacora, data, 'FAIL');
         return FAIL(bitacora);
     }
-};*/
+};
 //==========================================FIN PATCH===========================================================
 
 

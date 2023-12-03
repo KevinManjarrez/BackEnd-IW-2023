@@ -7,6 +7,7 @@ router.get('/', ordenesController.getOrdenesAll);
 router.get('/:id', ordenesController.getOrdenesOne);
 router.post('/', ordenesController.addOrdenes);
 router.put('/:id', ordenesController.updateOrden);
+router.patch('/actualizar/:id',ordenesController.updatePatchOrdenes);
 //router.patch('/:id',ordenesController.updateProduct);
 
 router.delete('/:id', ordenesController.deleteOrdenOne);

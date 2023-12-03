@@ -64,7 +64,7 @@ export const updateOrden = async (req, res, next) => {
 // FIN PUT********************************************************************************************* */
 
 
-/*export const updateProduct = async (req, res, next) => {
+  export const updateProduct = async (req, res, next) => {
     try {
         const productId = req.params.id;
         const updateData = req.body;
@@ -76,7 +76,7 @@ export const updateOrden = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-};*/
+}
 
 
 // DELETE************************************************************************************************ */
@@ -97,3 +97,21 @@ export const deleteOrdenOne = async (req, res, next) => {
     }
   };
 // FIN DELETE********************************************************************************************* */
+
+
+export const updatePatchOrdenes = async (req, res, next) => {
+    try {
+        const { id } = req.params; // Obtén el ID de la entrega desde los parámetros de la solicitud
+        const newData = req.body; // Obtén los nuevos datos desde el cuerpo de la solicitud
+
+        const result = await ordenesService.updatePatchOrdenes(id, newData);
+
+        if (result.status === 200) {
+            return res.status(200).json(result);
+        } else if (result.status === 404) {
+            return res.status(404).json(result);
+        }
+    } catch (error) {
+        next(error);
+    }
+}
