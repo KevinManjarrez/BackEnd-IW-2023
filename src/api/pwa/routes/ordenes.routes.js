@@ -3,14 +3,14 @@ import * as ordenesController from '../controllers/ordenes.controller';
 
 const router = Router();
 
-router.get('/', ordenesController.getOrdenesAll);
-router.get('/:id', ordenesController.getOrdenesOne);
-router.post('/', ordenesController.addOrdenes);
-router.put('/:id', ordenesController.updateOrden);
-router.patch('/actualizar/:id',ordenesController.updateProductMethod);
+router.get('/', ordenesController.GetAllOrders);
+router.get('/:id', ordenesController.GatOneOrderByID);
+router.post('/', ordenesController.AddOneOrder);
+router.put('/:id', ordenesController.UpdateOneOrder);
+router.patch('/actualizar/:id',ordenesController.UpdatePatchOneOrder);
 //router.patch('/:id',ordenesController.updateProduct);
 
-router.delete('/:id', ordenesController.deleteOrdenOne);
+router.delete('/:id', ordenesController.DeleteOneOrder);
 
 
 export default router;

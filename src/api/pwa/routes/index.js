@@ -13,7 +13,7 @@ const routerAPI = (app) => {
 
   //Aqui se agrega la ruta de toda api nueva que se cree
   //----------------------------------------------------
-  router.use("/pwa/ordenes", ordenesRoutes);
+  router.use("/pwa/orders", ordenesRoutes);
   //----------------------------------------------------
 
   return router;

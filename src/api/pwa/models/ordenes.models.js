@@ -4,6 +4,8 @@ import obtenerConexion from "../../../config/connectionsFactory";
 import obtenerModelo from "../../../config/modelsFactory";
 
 const ordenesSchemaPWA = new mongoose.Schema({
+  IdInstituoOK : { type: String },
+  IdNegocioOK : { type: String },
   IdOrdenOK: { type: String },
   IdOrdenBK: { type: String },
   IdTipoOrdenOK: { type: String },
@@ -92,7 +94,7 @@ const dbCluster = config.CLUSTER;
 const conn = obtenerConexion(dbName, dbCluster);
 
 const model = obtenerModelo(
-  "cat_ordenes",
+  "ordenes",
   ordenesSchemaPWA,
   conn,
   dbName,

@@ -2,7 +2,7 @@ import * as ordenesService from '../services/ordenes.service';
 
 // GET ALL************************************************************************************************ */
 
-export const getOrdenesAll = async(req, res, next) => {
+export const GetAllOrders = async(req, res, next) => {
     try{
         const ordenesAll = await ordenesService.getOrdenesAll();
         if(ordenesAll) {
@@ -15,7 +15,7 @@ export const getOrdenesAll = async(req, res, next) => {
 
 // GET ONE BY ID************************************************************************************************ */
 
-export const getOrdenesOne = async (req, res, next) => {
+export const GatOneOrderByID = async (req, res, next) => {
     try {
         const { id } = req.params; // Obtén el valor a consultar de los parámetros de la solicitud
     
@@ -31,7 +31,7 @@ export const getOrdenesOne = async (req, res, next) => {
 };
 
 // POST********************************************************************************************** */
-export const addOrdenes = async(req, res, next) => {
+export const AddOneOrder = async(req, res, next) => {
     try{
         const ordenesAdded = await ordenesService.addOrdenes(req.body);
         
@@ -45,7 +45,7 @@ export const addOrdenes = async(req, res, next) => {
 // FIN POST*************************************************************************************** */
 
 // PUT*********************************************************************************************** */
-export const updateOrden = async (req, res, next) => {
+export const UpdateOneOrder = async (req, res, next) => {
     try {
         const { id } = req.params; // Obtén el ID de la entrega desde los parámetros de la solicitud
         const newData = req.body; // Obtén los nuevos datos desde el cuerpo de la solicitud
@@ -80,7 +80,7 @@ export const updateOrden = async (req, res, next) => {
 
 
 // DELETE************************************************************************************************ */
-export const deleteOrdenOne = async (req, res, next) => {
+export const DeleteOneOrder = async (req, res, next) => {
     try {
       const { id } = req.params; // Obtén el id del Pedido para eliminar
       
@@ -99,7 +99,7 @@ export const deleteOrdenOne = async (req, res, next) => {
 // FIN DELETE********************************************************************************************* */
 
 
-export const updateProductMethod = async (req, res, next) => {
+export const UpdatePatchOneOrder = async (req, res, next) => {
     try {
         const { id } = req.params; // Obtén el ID de la entrega desde los parámetros de la solicitud
         const newData = req.body; // Obtén los nuevos datos desde el cuerpo de la solicitud
