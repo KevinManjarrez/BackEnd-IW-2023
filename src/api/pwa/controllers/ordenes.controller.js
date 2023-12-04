@@ -4,7 +4,7 @@ import * as ordenesService from '../services/ordenes.service';
 
 export const GetAllOrders = async(req, res, next) => {
     try{
-        const ordenesAll = await ordenesService.getOrdenesAll();
+        const ordenesAll = await ordenesService.GetAllOrders();
         if(ordenesAll) {
             return res.status(ordenesAll.status).json(ordenesAll);
         }
@@ -20,7 +20,7 @@ export const GatOneOrderByID = async (req, res, next) => {
         const { id } = req.params; // Obtén el valor a consultar de los parámetros de la solicitud
     
         // Llamar a la función para buscar y pasa el valor
-        const result = await ordenesService.getOrdenesOne(id);
+        const result = await ordenesService.GatOneOrderByID(id);
     
         if(result) {
             return res.status(result.status).json(result);
@@ -33,7 +33,7 @@ export const GatOneOrderByID = async (req, res, next) => {
 // POST********************************************************************************************** */
 export const AddOneOrder = async(req, res, next) => {
     try{
-        const ordenesAdded = await ordenesService.addOrdenes(req.body);
+        const ordenesAdded = await ordenesService.AddOneOrder(req.body);
         
         if(ordenesAdded) {
             return res.status(ordenesAdded.status).json(ordenesAdded);
@@ -50,7 +50,7 @@ export const UpdateOneOrder = async (req, res, next) => {
         const { id } = req.params; // Obtén el ID de la entrega desde los parámetros de la solicitud
         const newData = req.body; // Obtén los nuevos datos desde el cuerpo de la solicitud
 
-        const result = await ordenesService.updateOrden(id, newData);
+        const result = await ordenesService.UpdateOneOrder(id, newData);
 
         if (result.status === 200) {
             return res.status(200).json(result);
@@ -85,7 +85,7 @@ export const DeleteOneOrder = async (req, res, next) => {
       const { id } = req.params; // Obtén el id del Pedido para eliminar
       
       // Llama al servicio de eliminación y pasa el valor a eliminar
-      const result = await ordenesService.deleteOrdenOne(id);
+      const result = await ordenesService.DeleteOneOrder(id);
   
       if (result.status === 200) {
         return res.status(200).json(result);
@@ -104,7 +104,7 @@ export const UpdatePatchOneOrder = async (req, res, next) => {
         const { id } = req.params; // Obtén el ID de la entrega desde los parámetros de la solicitud
         const newData = req.body; // Obtén los nuevos datos desde el cuerpo de la solicitud
 
-        const result = await ordenesService.updateProductMethod(id, newData);
+        const result = await ordenesService.UpdatePatchOneOrder(id, newData);
 
         if (result.status === 200) {
             return res.status(200).json(result);
