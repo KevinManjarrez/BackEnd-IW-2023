@@ -8,7 +8,7 @@ import {
 } from "../../../middlewares/respPWA.handler";
 
 //==========================================GET===========================================================S
-export const getOrdenesAll = async () => {
+export const GetAllOrders = async () => {
   let bitacora = BITACORA();
   let data = DATA();
 
@@ -52,7 +52,7 @@ export const getOrdenesAll = async () => {
 //=========================================FIN GET===========================================================
 
 //==========================================GET ONE BY ID===========================================================S
-export const getOrdenesOne = async (id) => {
+export const GatOneOrderByID = async (id) => {
   let bitacora = BITACORA();
   let data = DATA();
 
@@ -93,7 +93,7 @@ export const getOrdenesOne = async (id) => {
 //=========================================FIN GET===========================================================
 
 //=========================================POST===========================================================
-export const addOrdenes = async (newOrden) => {
+export const AddOneOrder = async (newOrden) => {
   let bitacora = BITACORA();
   let data = DATA();
 
@@ -139,7 +139,7 @@ export const addOrdenes = async (newOrden) => {
 //=========================================FIN POST===========================================================
 
 //==============================================PUT===========================================================
-export const updateOrden = async (id, newData) => {
+export const UpdateOneOrder = async (id, newData) => {
   let bitacora = BITACORA();
   let data = DATA();
 
@@ -187,7 +187,7 @@ export const updateOrden = async (id, newData) => {
 //==========================================FIN PUT===========================================================
 
 //===========================================PATCH===========================================================
-export const updateProductMethod = async (ordenId, updateData) => {
+export const UpdatePatchOneOrder = async (ordenId, updateData) => {
   let bitacora = BITACORA();
   let data = DATA();
   try {
@@ -233,7 +233,7 @@ export const updateProductMethod = async (ordenId, updateData) => {
 //==========================================FIN PATCH===========================================================
 
 //===========================================DELETE===========================================================
-export const deleteOrdenOne = async (id) => {
+export const DeleteOneOrder = async (id) => {
   let bitacora = BITACORA();
   let data = DATA();
 
