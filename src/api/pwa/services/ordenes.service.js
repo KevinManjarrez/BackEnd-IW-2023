@@ -52,22 +52,26 @@ export const GetAllOrders = async () => {
 //=========================================FIN GET===========================================================
 
 //==========================================GET ONE BY ID===========================================================S
-export const GetOneOrderByID = async (id) => {
+export const GetOneOrderByID = async (idInstitutoOK, IdNegocioOK,IdOrdenOK) => {
   let bitacora = BITACORA();
   let data = DATA();
 
   try {
-    bitacora.process = `Obtener Orden por ID: ${id}`;
+    bitacora.process = `Obtener Orden por id`;
     data.method = "GET";
-    data.api = `/orders/${id}`;
+    data.api = `/orders/${idInstitutoOK}`;
     data.process = `Obtener un orden específico de la colección de Ordenes por su ID`;
 
-    const oneOrder = await ordersModel.findOne({ IdOrdenOK: id });
+    const oneOrder = await ordersModel.findOne({ 
+      IdInstitutoOK: idInstitutoOK, 
+      IdNegocioOK: IdNegocioOK, 
+      IdOrdenOK: IdOrdenOK 
+    });
     if (!oneOrder) {
       data.status = 404;
-      data.messageDEV = `No se encontró una orden con el ID ${id}.`;
+      data.messageDEV = `No se encontró una orden con id.`;
       throw Error(data.messageDEV);
-    }
+    }else{
 
     data.status = 200;
     data.messageUSR = "La obtención de la orden <<SI>> tuvo éxito";
@@ -76,6 +80,7 @@ export const GetOneOrderByID = async (id) => {
     bitacora = AddMSG(bitacora, data, "OK", 200, true);
 
     return OK(bitacora);
+  }
   } catch (error) {
     if (!data.status) data.status = error.statusCode;
     let { message } = error;
@@ -140,28 +145,28 @@ export const AddOneOrder = async (newOrden) => {
 
 //==============================================PUT===========================================================
 //==============================================PUT===========================================================
-export const UpdateOneOrder = async (id, newData) => {
+export const UpdateOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK, newData) => {
   let bitacora = BITACORA();
   let data = DATA();
 
   try {
-      bitacora.process = `Actualizar la Orden con ID ${id}`;
+      bitacora.process = `Actualizar la Orden con ID`;
       data.method = "PUT";
-      data.api = `/orders/${id}`;
+      data.api = `/orders/${IdInstitutoOK}`;
       data.process = "Actualizar la orden en la colección de Ordenes";
 
-      const updatedOrden = await ordersModel.findOneAndUpdate({ IdOrdenOK: id }, newData, {
+      const updatedOrden = await ordersModel.findOneAndUpdate({ IdInstitutoOK: IdInstitutoOK, IdNegocioOK: IdNegocioOK,IdOrdenOK: IdOrdenOK }, newData, {
           new: true, 
       });
 
       if (!updatedOrden) {
           data.status = 404;
-          data.messageDEV = `No se encontró una orden con el ID ${id}`;
+          data.messageDEV = `No se encontró una orden con el ID`;
           throw Error(data.messageDEV);
       }
 
       data.status = 200;
-      data.messageUSR = `Orden con el ID ${id} se actualizó con éxito`;
+      data.messageUSR = `Orden con el ID se actualizó con éxito`;
       data.dataRes = updatedOrden;
 
       bitacora = AddMSG(bitacora, data, 'OK', 200, true);
@@ -172,7 +177,7 @@ export const UpdateOneOrder = async (id, newData) => {
       let { message } = error;
       if (!data.messageDEV) data.messageDEV = message;
       if (data.dataRes.length !== 0) data.dataRes = error;
-      data.messageUSR = `La actualización de la orden con ID ${id} falló`;
+      data.messageUSR = `La actualización de la orden con ID falló`;
 
       bitacora = AddMSG(bitacora, data, 'FAIL');
 
@@ -186,7 +191,7 @@ export const UpdateOneOrder = async (id, newData) => {
 //==========================================FIN PUT===========================================================
 
 //===========================================PATCH===========================================================
-export const UpdatePatchOneOrder = async (id, updateData) => {
+export const UpdatePatchOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK, updateData) => {
   let bitacora = BITACORA();
   let data = DATA();
 
@@ -194,13 +199,13 @@ export const UpdatePatchOneOrder = async (id, updateData) => {
     bitacora.process = 'Modificar un producto.';
     data.process = 'Modificar un producto por unidad';
     data.method = 'PATCH';
-    data.api = `/orders/${id}`;
+    data.api = `/orders/${IdInstitutoOK}`;
 
-    const currentOrder = await ordersModel.findOne({ IdOrdenOK: id });
+    const currentOrder = await ordersModel.findOne({ IdInstitutoOK: IdInstitutoOK, IdNegocioOK: IdNegocioOK,IdOrdenOK: IdOrdenOK });
 
     if (!currentOrder) {
       data.status = 404;
-      data.messageDEV = `No se encontró una orden con el ID ${id}`;
+      data.messageDEV = `No se encontró una orden con el ID`;
       throw new Error(data.messageDEV);
     }
 
@@ -230,7 +235,7 @@ export const UpdatePatchOneOrder = async (id, updateData) => {
 
     if (data.dataRes === undefined) data.dataRes = error;
 
-    data.messageUSR = `La actualización de la orden con ID ${id} falló`;
+    data.messageUSR = `La actualización de la orden con ID falló`;
 
     bitacora = AddMSG(bitacora, data, 'FAIL');
 
@@ -240,29 +245,29 @@ export const UpdatePatchOneOrder = async (id, updateData) => {
 //==========================================FIN PATCH===========================================================
 
 //===========================================DELETE===========================================================
-export const DeleteOneOrder = async (id) => {
+export const DeleteOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK, updateData) => {
   let bitacora = BITACORA();
   let data = DATA();
 
   try {
-    bitacora.process = `Eliminar la orden con ID ${id}`;
+    bitacora.process = `Eliminar la orden con ID`;
     data.method = "DELETE";
-    data.api = `/orders/${id}`;
+    data.api = `/orders/${IdInstitutoOK}`;
     data.process = "Eliminar la orden en la colección de Ordenes";
     // Realiza la eliminación del documento en función del valor proporcionado
-    const result = await ordersModel.deleteOne({ IdOrdenOK: id });
+    const result = await ordersModel.deleteOne({ IdInstitutoOK: IdInstitutoOK, IdNegocioOK: IdNegocioOK,IdOrdenOK: IdOrdenOK });
 
     if (result.deletedCount === 0) {
       // Si no se encontró un documento para eliminar, lanza un error
       //throw new Error('Orden no encontrada.');
       data.status = 404;
-      data.messageDEV = `No se encontró una orden con el ID ${id}`;
+      data.messageDEV = `No se encontró una orden con el ID`;
       throw Error(data.messageDEV);
     }
 
     //return { message: 'Orden eliminada correctamente.' };
     data.status = 200;
-    data.messageUSR = `Orden con el ID ${id} se elimino con éxito`;
+    data.messageUSR = `Orden con el ID se elimino con éxito`;
     data.dataRes = result;
 
     bitacora = AddMSG(bitacora, data, "OK", 200, true);
