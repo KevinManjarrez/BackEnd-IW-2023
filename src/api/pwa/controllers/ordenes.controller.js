@@ -43,24 +43,24 @@ export const AddOneOrder = async (req, res, next) => {
   }
 };
 // FIN POST*************************************************************************************** */
-
 // PUT*********************************************************************************************** */
 export const UpdateOneOrder = async (req, res, next) => {
-  try {
-    const { id } = req.params; // Obtén el ID de la entrega desde los parámetros de la solicitud
-    const newData = req.body; // Obtén los nuevos datos desde el cuerpo de la solicitud
+    try {
+        const { id } = req.params; // Obtén el ID de la entrega desde los parámetros de la solicitud
+        const newData = req.body; // Obtén los nuevos datos desde el cuerpo de la solicitud
 
-    const result = await ordersService.UpdateOneOrder(id, newData);
+        const result = await ordersService.UpdateOneOrder(id, newData);
 
-    if (result.status === 200) {
-      return res.status(200).json(result);
-    } else if (result.status === 404) {
-      return res.status(404).json(result);
+        if (result.status === 200) {
+            return res.status(200).json(result);
+        } else if (result.status === 404) {
+            return res.status(404).json(result);
+        }
+    } catch (error) {
+        next(error);
     }
-  } catch (error) {
-    next(error);
-  }
 };
+// FIN PUT********************************************************************************************* */
 // FIN PUT********************************************************************************************* */
 //PUT PATCH********************************************************************************************* */
 export const UpdatePatchOneOrder = async (req, res, next) => {

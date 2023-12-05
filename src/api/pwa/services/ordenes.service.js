@@ -139,51 +139,50 @@ export const AddOneOrder = async (newOrden) => {
 //=========================================FIN POST===========================================================
 
 //==============================================PUT===========================================================
+//==============================================PUT===========================================================
 export const UpdateOneOrder = async (id, newData) => {
   let bitacora = BITACORA();
   let data = DATA();
 
   try {
-    bitacora.process = `Actualizar la Orden con ID ${id}`;
-    data.method = "PUT";
-    data.api = `/orders/${id}`;
-    data.process = "Actualizar la orden en la colección de Ordenes";
+      bitacora.process = `Actualizar la Orden con ID ${id}`;
+      data.method = "PUT";
+      data.api = `/ordenes/${id}`;
+      data.process = "Actualizar la orden en la colección de Ordenes";
 
-    const updatedOrder = await ordersModel.findOneAndUpdate(
-      { IdOrdenOK: id },
-      newData,
-      {
-        new: true,
+      const updatedOrden = await ordersModel.findOneAndUpdate({ IdOrdenOK: id }, newData, {
+          new: true, 
+      });
+
+      if (!updatedOrden) {
+          data.status = 404;
+          data.messageDEV = `No se encontró una orden con el ID ${id}`;
+          throw Error(data.messageDEV);
       }
-    );
 
-    if (!updatedOrder) {
-      data.status = 404;
-      data.messageDEV = `No se encontró una orden con el ID ${id}`;
-      throw Error(data.messageDEV);
-    }
+      data.status = 200;
+      data.messageUSR = `Orden con el ID ${id} se actualizó con éxito`;
+      data.dataRes = updatedOrden;
 
-    data.status = 200;
-    data.messageUSR = `Orden con el ID ${id} se actualizó con éxito`;
-    data.dataRes = updatedOrder;
+      bitacora = AddMSG(bitacora, data, 'OK', 200, true);
 
-    bitacora = AddMSG(bitacora, data, "OK", 200, true);
-
-    return OK(bitacora);
+      return OK(bitacora);
   } catch (error) {
-    if (!data.status) data.status = error.statusCode;
-    let { message } = error;
-    if (!data.messageDEV) data.messageDEV = message;
-    if (data.dataRes.length !== 0) data.dataRes = error;
-    data.messageUSR = `La actualización de la orden con ID ${id} falló`;
+      if (!data.status) data.status = error.statusCode;
+      let { message } = error;
+      if (!data.messageDEV) data.messageDEV = message;
+      if (data.dataRes.length !== 0) data.dataRes = error;
+      data.messageUSR = `La actualización de la orden con ID ${id} falló`;
 
-    bitacora = AddMSG(bitacora, data, "FAIL");
+      bitacora = AddMSG(bitacora, data, 'FAIL');
 
-    return FAIL(bitacora);
-  } finally {
-    // Haya o no error siempre ejecuta aquí
+      return FAIL(bitacora);
   }
-};
+  finally {
+      // Haya o no error siempre ejecuta aquí
+  }
+}
+//==========================================FIN PUT===========================================================
 //==========================================FIN PUT===========================================================
 
 //===========================================PATCH===========================================================
