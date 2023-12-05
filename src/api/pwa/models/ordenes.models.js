@@ -4,13 +4,13 @@ import obtenerConexion from "../../../config/connectionsFactory";
 import obtenerModelo from "../../../config/modelsFactory";
 
 const ordenesSchemaPWA = new mongoose.Schema({
-  IdInstituoOK : { type: String },
-  IdNegocioOK : { type: String },
+  IdInstitutoOK : { type: Number },
+  IdNegocioOK : { type: Number },
   IdOrdenOK: { type: String },
   IdOrdenBK: { type: String },
   IdTipoOrdenOK: { type: String },
   IdRolOK: { type: String },
-  IdPersonaOK: { type: Number },
+  IdPersonaOK: { type: String },
   ordenes_estatus: [
     {
       IdTipoEstatusOK: { type: String },

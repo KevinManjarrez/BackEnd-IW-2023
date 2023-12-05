@@ -147,7 +147,7 @@ export const UpdateOneOrder = async (id, newData) => {
   try {
       bitacora.process = `Actualizar la Orden con ID ${id}`;
       data.method = "PUT";
-      data.api = `/ordenes/${id}`;
+      data.api = `/orders/${id}`;
       data.process = "Actualizar la orden en la colección de Ordenes";
 
       const updatedOrden = await ordersModel.findOneAndUpdate({ IdOrdenOK: id }, newData, {
@@ -186,47 +186,60 @@ export const UpdateOneOrder = async (id, newData) => {
 //==========================================FIN PUT===========================================================
 
 //===========================================PATCH===========================================================
-export const UpdatePatchOneOrder = async (id, updateData) => {
+export const UpdatePatchOneOrder = async (id,updateData) => {
   let bitacora = BITACORA();
   let data = DATA();
   try {
-    bitacora.process = "Modificar una orden";
-    data.process = "Modificar una orden";
-    data.method = "PATCH";
-    data.api = `/orders/update/${id}`;
-    const updateQuery = {};
-    const keys = Object.keys(updateData);
-    for (let i = 0; i < keys.length; i++) {
-      const obj = keys[i];
-      updateQuery[obj] = updateData[obj];
-      if (i === keys.length - 1) {
-        break;
+      bitacora.process = 'Modificar un producto.';
+      data.process = 'Modificar un producto';
+      data.method = 'PATCH';
+      data.api = `/orders/${id}`;
+      //Actualizar cada propiedad de updateData
+      //NOTA, si se le manda un nombre distinto de un subdocumento, no pasará nada
+      let productoUpdated = null
+      for (const obj of updateData) {
+          for (const propiedad in obj) {
+              if (obj.hasOwnProperty(propiedad)) {
+                  const updateQuery = {};
+                  updateQuery[propiedad] = obj[propiedad];
+                  try {
+                      productoUpdated = await CatProdServ.findOneAndUpdate(
+                      { IdProdServOK: id },
+                      updateQuery,
+                      { new: true }
+                  );
+                  if (!productoUpdated) {
+                      console.error("No se encontró un documento para actualizar con ese ID,",id);
+                      data.status = 400;
+                      data.messageDEV = 'La Actualización de un Subdocumento del producto NO fue exitoso.';
+                      throw new Error(data.messageDEV);
+                  }
+                  } catch (error) {
+                      console.error(error);
+                      data.status = 400;
+                      data.messageDEV = 'La Actualizacion de un Subdocumento del producto NO fue exitoso.';
+                      throw Error(data.messageDEV);
+                  }
+              }
+          }
+     
       }
-    }
-
-    const productoUpdated = await ordersModel.findOneAndUpdate(
-      { IdOrdenOK: id },
-      updateQuery,
-      { new: true, useFindAndModify: false }
-    );
-
-    data.messageUSR =
-      "La Modificacion de los subdocumentos de producto SI fue exitoso.";
-    data.dataRes = productoUpdated;
-    bitacora = AddMSG(bitacora, data, "OK", 201, true);
-    return OK(bitacora);
+      data.messageUSR = 'La Modificacion de los subdocumentos de producto SI fue exitoso.';
+      data.dataRes = productoUpdated;
+      bitacora = AddMSG(bitacora, data, 'OK', 201, true);
+      return OK(bitacora);
   } catch (error) {
-    console.error(error);
-    if (!data.status) data.status = error.statusCode;
-    let { message } = error;
-    if (!data.messageDEV) data.messageDEV = message;
-    if (data.dataRes.length === 0) data.dataRes = error;
-    data.messageUSR =
-      "La Modificacionión del producto NO fue exitoso." +
-      "\n" +
-      "Any operations that already occurred as part of this transaction will be rolled back.";
-    bitacora = AddMSG(bitacora, data, "FAIL");
-    return FAIL(bitacora);
+      console.error(error)
+      if (!data.status) data.status = error.statusCode;
+      let { message } = error;
+      if (!data.messageDEV) data.messageDEV = message;
+      if (data.dataRes.length === 0) data.dataRes = error;
+      data.messageUSR =
+          'La Modificacionión del producto NO fue exitoso.' +
+          '\n' +
+          'Any operations that already occurred as part of this transaction will be rolled back.';
+      bitacora = AddMSG(bitacora, data, 'FAIL');
+      return FAIL(bitacora);
   }
 };
 //==========================================FIN PATCH===========================================================
