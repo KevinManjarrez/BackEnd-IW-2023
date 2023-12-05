@@ -52,18 +52,18 @@ export const GetAllOrders = async () => {
 //=========================================FIN GET===========================================================
 
 //==========================================GET ONE BY ID===========================================================S
-export const GetOneOrderByID = async (idInstitutoOK, IdNegocioOK,IdOrdenOK) => {
+export const GetOneOrderByID = async (IdInstitutoOK, IdNegocioOK,IdOrdenOK) => {
   let bitacora = BITACORA();
   let data = DATA();
 
   try {
     bitacora.process = `Obtener Orden por id`;
     data.method = "GET";
-    data.api = `/orders/${idInstitutoOK}`;
+    data.api = `/orders/${IdInstitutoOK}`;
     data.process = `Obtener un orden específico de la colección de Ordenes por su ID`;
 
     const oneOrder = await ordersModel.findOne({ 
-      IdInstitutoOK: idInstitutoOK, 
+      IdInstitutoOK: IdInstitutoOK, 
       IdNegocioOK: IdNegocioOK, 
       IdOrdenOK: IdOrdenOK 
     });
@@ -209,9 +209,19 @@ export const UpdatePatchOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK,
       throw new Error(data.messageDEV);
     }
 
-    for (const key in updateData) {
-      if (updateData.hasOwnProperty(key)) {
-        currentOrder[key] = updateData[key];
+    // Actualizar subdocumentos específicos
+    if (updateData.ordenes_detalle && Array.isArray(updateData.ordenes_detalle)) {
+      for (const updatedDetalle of updateData.ordenes_detalle) {
+        const existingDetalle = currentOrder.ordenes_detalle.find(
+          (existing) => existing.IdProdServOK === updatedDetalle.IdProdServOK
+        );
+
+        if (existingDetalle) {
+          // Actualizar la propiedad específica del subdocumento existente
+          existingDetalle.DesPresentaPS = updatedDetalle.DesPresentaPS;
+          // Puedes agregar más campos según sea necesario
+        }
+        // No hacer nada si el subdocumento no existe (opcional: puedes manejarlo de otra manera según tus necesidades)
       }
     }
 

@@ -17,10 +17,10 @@ export const GetAllOrders = async (req, res, next) => {
 
 export const GetOneOrderByID = async (req, res, next) => {
   try {
-    const { idInstitutoOK, IdNegocioOK,IdOrdenOK } = req.query; // Obtén el valor a consultar de los parámetros de la solicitud
+    const { IdInstitutoOK, IdNegocioOK,IdOrdenOK } = req.query; // Obtén el valor a consultar de los parámetros de la solicitud
 
     // Llamar a la función para buscar y pasa el valor
-    const result = await ordersService.GetOneOrderByID(idInstitutoOK, IdNegocioOK,IdOrdenOK);
+    const result = await ordersService.GetOneOrderByID(IdInstitutoOK, IdNegocioOK,IdOrdenOK);
 
     if (result) {
       return res.status(result.status).json(result);
@@ -46,11 +46,11 @@ export const AddOneOrder = async (req, res, next) => {
 // PUT*********************************************************************************************** */
 export const UpdateOneOrder = async (req, res, next) => {
     try {
-      const { idInstitutoOK, IdNegocioOK,IdOrdenOK } = req.query; // Obtén el valor a consultar de los parámetros de la solicitud
+      const { IdInstitutoOK, IdNegocioOK,IdOrdenOK } = req.query; // Obtén el valor a consultar de los parámetros de la solicitud
         const newData = req.body; // Obtén los nuevos datos desde el cuerpo de la solicitud
 
         // Llamar a la función para buscar y pasa el valor
-        const result = await ordersService.UpdateOneOrder(idInstitutoOK, IdNegocioOK,IdOrdenOK,newData);
+        const result = await ordersService.UpdateOneOrder(IdInstitutoOK, IdNegocioOK,IdOrdenOK,newData);
 
         if (result.status === 200) {
             return res.status(200).json(result);
@@ -65,11 +65,11 @@ export const UpdateOneOrder = async (req, res, next) => {
 //PUT PATCH********************************************************************************************* */
 export const UpdatePatchOneOrder = async (req, res, next) => {
   try {
-    const { idInstitutoOK, IdNegocioOK,IdOrdenOK } = req.query; // Obtén el valor a consultar de los parámetros de la solicitud
-    const newData = req.body; // Obtén los nuevos datos desde el cuerpo de la solicitud
+    const { IdInstitutoOK, IdNegocioOK,IdOrdenOK } = req.query; // Obtén el valor a consultar de los parámetros de la solicitud
+    const updateData = req.body; // Obtén los nuevos datos desde el cuerpo de la solicitud
 
     // Llamar a la función para buscar y pasa el valor
-    const result = await ordersService.UpdatePatchOneOrder(idInstitutoOK, IdNegocioOK,IdOrdenOK,newData);
+    const result = await ordersService.UpdatePatchOneOrder(IdInstitutoOK, IdNegocioOK,IdOrdenOK,updateData);
 
     if (result.status === 200) {
       return res.status(200).json(result);
@@ -85,10 +85,10 @@ export const UpdatePatchOneOrder = async (req, res, next) => {
 // DELETE************************************************************************************************ */
 export const DeleteOneOrder = async (req, res, next) => {
   try {
-    const { idInstitutoOK, IdNegocioOK,IdOrdenOK } = req.query; // Obtén el valor a consultar de los parámetros de la solicitud
+    const { IdInstitutoOK, IdNegocioOK,IdOrdenOK } = req.query; // Obtén el valor a consultar de los parámetros de la solicitud
 
     // Llamar a la función para buscar y pasa el valor
-    const result = await ordersService.DeleteOneOrder(idInstitutoOK, IdNegocioOK,IdOrdenOK);
+    const result = await ordersService.DeleteOneOrder(IdInstitutoOK, IdNegocioOK,IdOrdenOK);
 
 
     if (result.status === 200) {
