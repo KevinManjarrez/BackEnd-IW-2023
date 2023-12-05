@@ -3,7 +3,7 @@ import config from "../../../config/config";
 
 //Aqui se agregan los import de cada router de api que se cree
 //------------------------------------------------------------
-import ordenesRoutes from "./ordenes.routes";
+import ordersRoutes from "./ordenes.routes";
 //------------------------------------------------------------
 
 const routerAPI = (app) => {
@@ -13,7 +13,7 @@ const routerAPI = (app) => {
 
   //Aqui se agrega la ruta de toda api nueva que se cree
   //----------------------------------------------------
-  router.use("/pwa/orders", ordenesRoutes);
+  router.use("/pwa/orders", ordersRoutes);
   //----------------------------------------------------
 
   return router;
