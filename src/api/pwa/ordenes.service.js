@@ -1,11 +1,11 @@
-import ordersModel from "../models/ordenes.models";
+/* import ordersModel from "../models/ordenes.models";
 import {
   OK,
   FAIL,
   BITACORA,
   DATA,
   AddMSG,
-} from "../../../middlewares/respPWA.handler";
+} from "../../middlewares/respPWA.handler";
 
 //==========================================GET===========================================================S
 export const GetAllOrders = async () => {
@@ -204,9 +204,9 @@ export const UpdateOneOrder = async (
 //==========================================FIN PUT===========================================================
 
 //===========================================PATCH============================================================
-export const UpdatePatchOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK, updateData) => {
+export const UpdatePatchOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK,updateData) => {
   let bitacora = BITACORA();
-  let response = await UpdatePatchOneOrderMethod(bitacora, IdInstitutoOK, IdNegocioOK, IdOrdenOK, updateData);
+  let response = UpdatePatchOneOrderMethod(bitacora,IdInstitutoOK, IdNegocioOK, IdOrdenOK,updateData);
   return response;
 };
 
@@ -243,19 +243,19 @@ export const UpdatePatchOneOrderMethod = async (bitacora, IdInstitutoOK, IdNegoc
           if (!orderUpdated) {
             console.error("No se encontró un documento para actualizar con ese ID,", IdOrdenOK);
             data.status = 400;
-            data.messageDEV = 'La Actualización de un Subdocumento de la orden NO fue exitoso.';
+            data.messageDEV = 'La Actualización de un Subdocumento dela orden NO fue exitoso.';
             throw new Error(data.messageDEV);
           }
         } catch (error) {
           console.error(error);
           data.status = 400;
-          data.messageDEV = 'La Actualizacion de un Subdocumento de la orden NO fue exitoso.';
+          data.messageDEV = 'La Actualizacion de un Subdocumento dela orden NO fue exitoso.';
           throw Error(data.messageDEV);
         }
       }
     }
 
-    data.messageUSR = 'La modificación de los subdocumentos de la orden SI fue exitoso.';
+    data.messageUSR = 'La Modificacion de los subdocumentos dea orden SI fue exitoso.';
     data.dataRes = orderUpdated;
     bitacora = AddMSG(bitacora, data, 'OK', 201, true);
     return OK(bitacora);
@@ -266,7 +266,7 @@ export const UpdatePatchOneOrderMethod = async (bitacora, IdInstitutoOK, IdNegoc
     if (!data.messageDEV) data.messageDEV = message;
     if (data.dataRes.length === 0) data.dataRes = error;
     data.messageUSR =
-      'La modificación del orden NO fue exitoso.' +
+      'La Modificacionión dela orden NO fue exitoso.' +
       '\n' +
       'Any operations that already occurred as part of this transaction will be rolled back.';
     bitacora = AddMSG(bitacora, data, 'FAIL');
@@ -324,3 +324,4 @@ export const DeleteOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK) => {
 };
 //=======================================FIN DELETE===========================================================
 
+ */

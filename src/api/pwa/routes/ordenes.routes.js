@@ -7,7 +7,7 @@ router.get('/', ordersController.GetAllOrders);
 router.get('/one', ordersController.GetOneOrderByID);
 router.post('/', ordersController.AddOneOrder);
 router.put('/', ordersController.UpdateOneOrder);
-router.patch('/', ordersController.UpdatePatchOneOrder);
+router.patch('/one', ordersController.UpdatePatchOneOrder);
 router.delete('/', ordersController.DeleteOneOrder);
 
 export default router;
