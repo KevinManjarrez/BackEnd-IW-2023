@@ -201,41 +201,46 @@ export const UpdatePatchOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK,
     data.method = 'PATCH';
     data.api = `/orders/${IdInstitutoOK}`;
 
-    const currentOrder = await ordersModel.findOne({ IdInstitutoOK: IdInstitutoOK, IdNegocioOK: IdNegocioOK,IdOrdenOK: IdOrdenOK });
+    // Construir las condiciones de búsqueda
+    const conditions = {
+      IdInstitutoOK: IdInstitutoOK,
+      IdNegocioOK: IdNegocioOK,
+      IdOrdenOK: IdOrdenOK
+    };
 
-    if (!currentOrder) {
+    // Construir la actualización basada en el cuerpo de la solicitud
+    const update = { $set: {} };
+
+    // Iterar sobre las claves del cuerpo de la solicitud
+    for (const key in updateData) {
+      if (updateData.hasOwnProperty(key)) {
+        if (key === 'ordenes_estatus') {
+          // Para el arreglo 'ordenes_estatus', construir las actualizaciones específicas
+          update.$set[key] = updateData[key].map((updatedStatus) => ({
+            'ordenes_estatus.$[elem].IdTipoEstatusOK': updatedStatus.IdTipoEstatusOK
+          }));
+
+          // Establecer el filtro de arrayFilters
+          update.arrayFilters = [{ 'elem.IdTipoEstatusOK': { $eq: updatedStatus.IdTipoEstatusOK } }];
+        } else {
+          // Para otras claves, simplemente establecer el valor
+          update.$set[key] = updateData[key];
+        }
+      }
+    }
+
+    // Ejecutar la actualización utilizando findOneAndUpdate
+    const result = await ordersModel.findOneAndUpdate(conditions, update, { new: true });
+
+    if (!result) {
       data.status = 404;
       data.messageDEV = `No se encontró una orden con el ID`;
       throw new Error(data.messageDEV);
     }
 
-    // Actualizar subdocumentos específicos
-    if (updateData.ordenes_detalle && Array.isArray(updateData.ordenes_detalle)) {
-      for (const updatedDetalle of updateData.ordenes_detalle) {
-        const existingDetalle = currentOrder.ordenes_detalle.find(
-          (existing) => existing.IdProdServOK === updatedDetalle.IdProdServOK
-        );
-
-        if (existingDetalle) {
-          // Actualizar la propiedad específica del subdocumento existente
-          existingDetalle.DesPresentaPS = updatedDetalle.DesPresentaPS;
-          // Puedes agregar más campos según sea necesario
-        }
-        // No hacer nada si el subdocumento no existe (opcional: puedes manejarlo de otra manera según tus necesidades)
-      }
-    }
-
-    // Guardar los cambios
-    const result = await currentOrder.save();
-
-    // Devolver solo las propiedades actualizadas
-    data.dataRes = Object.keys(updateData).reduce((acc, key) => {
-      acc[key] = result[key];
-      return acc;
-    }, {});
-
     data.status = 200;
     data.messageUSR = 'La Modificacion de los subdocumentos de producto SI fue exitoso.';
+    data.dataRes = result;
     bitacora = AddMSG(bitacora, data, 'OK', 201, true);
 
     return OK(bitacora);
