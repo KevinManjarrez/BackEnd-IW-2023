@@ -46,11 +46,11 @@ export const AddOneOrder = async (req, res, next) => {
 // PUT*********************************************************************************************** */
 export const UpdateOneOrder = async (req, res, next) => {
     try {
-      const { IdInstitutoOK, IdNegocioOK,IdOrdenOK,index } = req.query; // Obtén el valor a consultar de los parámetros de la solicitud
+      const { IdInstitutoOK, IdNegocioOK,IdOrdenOK } = req.query; // Obtén el valor a consultar de los parámetros de la solicitud
         const newData = req.body; // Obtén los nuevos datos desde el cuerpo de la solicitud
 
         // Llamar a la función para buscar y pasa el valor
-        const result = await ordersService.UpdateOneOrder(IdInstitutoOK, IdNegocioOK,IdOrdenOK,newData,index);
+        const result = await ordersService.UpdateOneOrder(IdInstitutoOK, IdNegocioOK,IdOrdenOK,newData);
 
         if (result.status === 200) {
             return res.status(200).json(result);
