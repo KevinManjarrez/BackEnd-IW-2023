@@ -58,7 +58,7 @@ export const GetOneOrderByID = async (IdInstitutoOK, IdNegocioOK,IdOrdenOK) => {
 
   try {
     bitacora.process = `Obtener Orden por id`;
-    data.method = "GET";
+    data.method = "GET ONE ORDER BY ID";
     data.api = `/orders/${IdInstitutoOK}`;
     data.process = `Obtener un Orden específico de la colección de Ordenes por su ID`;
 
@@ -199,9 +199,9 @@ export const UpdatePatchOneOrderMethod = async (bitacora, IdInstitutoOK, IdNegoc
   let data = DATA();
   try {
     bitacora.process = 'Modificar una orden.';
-    data.process = 'Modificar un orden';
+    data.process = 'Modificar una orden.';
     data.method = 'PATCH';
-    data.api = '/orders';
+    data.api = '/orders/one';
 
     let orderUpdated = null;
 
@@ -234,13 +234,13 @@ export const UpdatePatchOneOrderMethod = async (bitacora, IdInstitutoOK, IdNegoc
         } catch (error) {
           console.error(error);
           data.status = 400;
-          data.messageDEV = 'La actualización de un Subdocumento de la orden NO fue exitosa.';
+          data.messageDEV = 'La actualización de un subdocumento de la orden NO fue exitosa.';
           throw Error(data.messageDEV);
         }
       }
     }
 
-    data.messageUSR = 'La modificación de los subdocumentos de la orden SI fue exitosa.';
+    data.messageUSR = 'La modificación de los subdocumentos de pago SI fue exitosa.';
     data.dataRes = orderUpdated;
     bitacora = AddMSG(bitacora, data, 'OK', 201, true);
     return OK(bitacora);
