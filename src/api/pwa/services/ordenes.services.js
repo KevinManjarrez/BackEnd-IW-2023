@@ -198,10 +198,10 @@ export const UpdatePatchOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK,
 export const UpdatePatchOneOrderMethod = async (bitacora, IdInstitutoOK, IdNegocioOK, IdOrdenOK, updateData) => {
   let data = DATA();
   try {
-    bitacora.process = 'Modificar una orden.';
-    data.process = 'Modificar una orden.';
+    bitacora.process = 'Modificar una orden';
+    data.process = 'Modificar una orden';
     data.method = 'PATCH';
-    data.api = '/orders/one';
+    data.api = '/one';
 
     let orderUpdated = null;
 
@@ -228,19 +228,19 @@ export const UpdatePatchOneOrderMethod = async (bitacora, IdInstitutoOK, IdNegoc
           if (!orderUpdated) {
             console.error("No se encontró un documento para actualizar con ese ID,", IdOrdenOK);
             data.status = 400;
-            data.messageDEV = 'La actualización de un Subdocumento de la orden NO fue exitosa.';
+            data.messageDEV = 'La actualización de un subdocumento de la orden NO fue exitosa.';
             throw new Error(data.messageDEV);
           }
         } catch (error) {
           console.error(error);
           data.status = 400;
-          data.messageDEV = 'La actualización de un subdocumento de la orden NO fue exitosa.';
+          data.messageDEV = 'La Actualizacion de un Subdocumento de la orden NO fue exitosa.';
           throw Error(data.messageDEV);
         }
       }
     }
 
-    data.messageUSR = 'La modificación de los subdocumentos de pago SI fue exitosa.';
+    data.messageUSR = 'La modificación de los subdocumentos de orden SI fue exitosa.';
     data.dataRes = orderUpdated;
     bitacora = AddMSG(bitacora, data, 'OK', 201, true);
     return OK(bitacora);
