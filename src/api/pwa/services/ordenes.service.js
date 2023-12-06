@@ -204,45 +204,27 @@ export const UpdateOneOrder = async (
 //==========================================FIN PUT===========================================================
 
 //===========================================PATCH============================================================
-
-export const UpdatePatchOneOrder = async (
-  IdInstitutoOK,
-  IdNegocioOK,
-  IdOrdenOK,
-  updateData
-) => {
+export const UpdatePatchOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK, updateData) => {
   let bitacora = BITACORA();
-  let response = UpdatePatchOneOrderMethod(
-    bitacora,
-    IdInstitutoOK,
-    IdNegocioOK,
-    IdOrdenOK,
-    updateData
-  );
+  let response = await UpdatePatchOneOrderMethod(bitacora, IdInstitutoOK, IdNegocioOK, IdOrdenOK, updateData);
   return response;
 };
 
-export const UpdatePatchOneOrderMethod = async (
-  bitacora,
-  IdInstitutoOK,
-  IdNegocioOK,
-  IdOrdenOK,
-  updateData
-) => {
+export const UpdatePatchOneOrderMethod = async (bitacora, IdInstitutoOK, IdNegocioOK, IdOrdenOK, updateData) => {
   let data = DATA();
   try {
-    bitacora.process = "Modificar una orden.";
-    data.process = "Modificar un ordne";
-    data.method = "PATCH";
-    data.api = "/one";
+    bitacora.process = 'Modificar una orden.';
+    data.process = 'Modificar una orden';
+    data.method = 'PATCH';
+    data.api = '/orders';
 
-    let paymentUpdated = null;
+    let orderUpdated = null;
 
-    // Encuentra el documento principal usando IdInstitutoOK, IdNegocioOK e IdPagoOK
+    // Encuentra el documento principal usando IdInstitutoOK, IdNegocioOK e IdOrdenOK
     const filter = {
       IdInstitutoOK: IdInstitutoOK,
       IdNegocioOK: IdNegocioOK,
-      IdOrdenOK: IdOrdenOK,
+      IdOrdenOK: IdOrdenOK
     };
 
     for (const key in updateData) {
@@ -252,34 +234,30 @@ export const UpdatePatchOneOrderMethod = async (
         const updateQuery = { $set: { [key]: value } };
 
         try {
-          paymentUpdated = await Pagos.findOneAndUpdate(filter, updateQuery, {
-            new: true,
-          });
+          orderUpdated = await ordersModel.findOneAndUpdate(
+            filter,
+            updateQuery,
+            { new: true }
+          );
 
-          if (!paymentUpdated) {
-            console.error(
-              "No se encontró un documento para actualizar con ese ID,",
-              IdPagoOK
-            );
+          if (!orderUpdated) {
+            console.error("No se encontró un documento para actualizar con ese ID,", IdOrdenOK);
             data.status = 400;
-            data.messageDEV =
-              "La actualización de un Subdocumento de la orden NO fue exitoso.";
+            data.messageDEV = 'La Actualización de un Subdocumento de la orden NO fue exitoso.';
             throw new Error(data.messageDEV);
           }
         } catch (error) {
           console.error(error);
           data.status = 400;
-          data.messageDEV =
-            "La actualización de un Subdocumento de la orden NO fue exitoso.";
+          data.messageDEV = 'La Actualizacion de un Subdocumento de la orden NO fue exitoso.';
           throw Error(data.messageDEV);
         }
       }
     }
 
-    data.messageUSR =
-      "La modificación de los subdocumentos de orden SI fue exitoso.";
-    data.dataRes = paymentUpdated;
-    bitacora = AddMSG(bitacora, data, "OK", 201, true);
+    data.messageUSR = 'La modificación de los subdocumentos de la orden SI fue exitoso.';
+    data.dataRes = orderUpdated;
+    bitacora = AddMSG(bitacora, data, 'OK', 201, true);
     return OK(bitacora);
   } catch (error) {
     console.error(error);
@@ -288,14 +266,13 @@ export const UpdatePatchOneOrderMethod = async (
     if (!data.messageDEV) data.messageDEV = message;
     if (data.dataRes.length === 0) data.dataRes = error;
     data.messageUSR =
-      "La modificación de la orden NO fue exitosa." +
-      "\n" +
-      "Any operations that already occurred as part of this transaction will be rolled back.";
-    bitacora = AddMSG(bitacora, data, "FAIL");
+      'La modificación del orden NO fue exitoso.' +
+      '\n' +
+      'Any operations that already occurred as part of this transaction will be rolled back.';
+    bitacora = AddMSG(bitacora, data, 'FAIL');
     return FAIL(bitacora);
   }
 };
-
 //==========================================FIN PATCH===========================================================
 
 //===========================================DELETE===========================================================
@@ -346,3 +323,4 @@ export const DeleteOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK) => {
   }
 };
 //=======================================FIN DELETE===========================================================
+
