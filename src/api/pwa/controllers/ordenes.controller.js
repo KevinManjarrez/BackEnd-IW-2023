@@ -1,4 +1,4 @@
-import * as ordersService from "../services/ordenes.service";
+import * as ordersService from "../services/ordenes.services";
 
 // GET ALL************************************************************************************************ */
 

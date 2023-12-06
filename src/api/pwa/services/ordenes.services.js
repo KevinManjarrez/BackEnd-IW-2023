@@ -1,4 +1,4 @@
-import ordersModel from "../models/ordenes.models";
+import ordersModel from "../models/ordenes";
 import {
   OK,
   FAIL,
