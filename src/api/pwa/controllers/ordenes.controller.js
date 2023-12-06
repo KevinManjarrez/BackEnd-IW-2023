@@ -101,3 +101,13 @@ export const DeleteOneOrder = async (req, res, next) => {
   }
 };
 // FIN DELETE********************************************************************************************* */
+export const GetAllLabels = async (req, res, next) => {
+  try {
+    const ordenesAll = await ordersService.GetAllLabels();
+    if (ordenesAll) {
+      return res.status(ordenesAll.status).json(ordenesAll);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
