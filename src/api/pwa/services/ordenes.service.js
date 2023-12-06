@@ -191,7 +191,9 @@ export const UpdateOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK, newD
 //==========================================FIN PUT===========================================================
 
 //===========================================PATCH===========================================================
-export const UpdatePatchOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK, updateData) => {
+
+
+/* export const UpdatePatchOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK, updateData) => {
   let bitacora = BITACORA();
   let data = DATA();
 
@@ -256,11 +258,72 @@ export const UpdatePatchOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK,
 
     return FAIL(bitacora);
   }
+}; */
+
+function updateNestedFields(target, source) {
+  for (const key in source) {
+    if (source[key] instanceof Object) {
+      if (!target[key]) target[key] = {};
+      updateNestedFields(target[key], source[key]);
+    } else {
+      target[key] = source[key];
+    }
+  }
+}
+
+export const UpdatePatchOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK, updateData) => {
+  let bitacora = BITACORA();
+  let data = DATA();
+
+  try {
+    bitacora.process = 'Modificar un producto.';
+    data.process = 'Modificar un producto por unidad';
+    data.method = 'PATCH';
+    data.api = `/orders/${IdInstitutoOK}`;
+
+    const currentOrder = await ordersModel.findOne({ IdInstitutoOK: IdInstitutoOK, IdNegocioOK: IdNegocioOK,IdOrdenOK: IdOrdenOK });
+    console.log(currentOrder);
+    
+    if (!currentOrder) {
+      data.status = 404;
+      data.messageDEV = `No se encontró una orden con el ID`;
+      throw new Error(data.messageDEV);
+    }
+
+    updateNestedFields(currentOrder, updateData);
+
+    // Guardar los cambios
+    const result = await currentOrder.save();
+
+    // Devolver solo las propiedades actualizadas
+    data.dataRes = Object.keys(updateData).reduce((acc, key) => {
+      acc[key] = result[key];
+      return acc;
+    }, {});
+
+    data.status = 200;
+    data.messageUSR = 'La Modificacion de los subdocumentos de producto SI fue exitoso.';
+    bitacora = AddMSG(bitacora, data, 'OK', 201, true);
+
+    return OK(bitacora);
+  } catch (error) {
+    if (!data.status) data.status = error.statusCode || 500;
+    if (!data.messageDEV) data.messageDEV = error.message || 'Error desconocido';
+
+    if (data.dataRes === undefined) data.dataRes = error;
+
+    data.messageUSR = `La actualización de la orden con ID falló`;
+
+    bitacora = AddMSG(bitacora, data, 'FAIL');
+
+    return FAIL(bitacora);
+  }
 };
+
 //==========================================FIN PATCH===========================================================
 
 //===========================================DELETE===========================================================
-export const DeleteOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK, updateData) => {
+export const DeleteOneOrder = async (IdInstitutoOK, IdNegocioOK, IdOrdenOK) => {
   let bitacora = BITACORA();
   let data = DATA();
 
