@@ -109,3 +109,37 @@ export const GetAllLabels = async (req, res, next) => {
     next(error);
   }
 };
+
+export const GetTipoOrden = async (req, res, next) => {
+  try {
+    const labelsAll = await ordersService.GetTipoOrden();
+    if (labelsAll) {
+      return res.status(labelsAll.status).json(labelsAll);
+     
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+export const GetRol = async (req, res, next) => {
+  try {
+    const labelsAll = await ordersService.GetRol();
+    if (labelsAll) {
+      return res.status(labelsAll.status).json(labelsAll);
+     
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+export const GetPersona = async (req, res, next) => {
+  try {
+    const labelsAll = await ordersService.GetPersona();
+    if (labelsAll) {
+      return res.status(labelsAll.status).json(labelsAll);
+     
+    }
+  } catch (error) {
+    next(error);
+  }
+};

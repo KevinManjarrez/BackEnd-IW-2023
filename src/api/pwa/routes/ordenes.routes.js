@@ -11,4 +11,9 @@ router.put('/', ordersController.UpdateOneOrder);
 router.patch('/one', ordersController.UpdatePatchOneOrder);
 router.delete('/', ordersController.DeleteOneOrder);
 
+//Cats
+router.get('/tipoOrden', ordersController.GetTipoOrden);
+router.get('/rol', ordersController.GetRol);
+router.get('/persona', ordersController.GetPersona);
+
 export default router;
