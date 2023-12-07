@@ -325,7 +325,7 @@ export const GetAllLabels = async () => {
         throw Error(data.messageDEV);
       }
 
-      return orders;
+      return labels;
     });
 
     data.status = 200; //200 = codigo cuando encuentras documentos
