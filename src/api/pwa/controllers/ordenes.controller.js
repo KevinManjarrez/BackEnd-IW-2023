@@ -65,20 +65,17 @@ export const UpdateOneOrder = async (req, res, next) => {
 //PUT PATCH********************************************************************************************* */
 export const UpdatePatchOneOrder = async (req, res, next) => {
   try {
-    const { IdInstitutoOK, IdNegocioOK,IdOrdenOK } = req.query; // Obtén el valor a consultar de los parámetros de la solicitud
-    const updateData = req.body; // Obtén los nuevos datos desde el cuerpo de la solicitud
-
-    // Llamar a la función para buscar y pasa el valor
-    const result = await ordersService.UpdatePatchOneOrder(IdInstitutoOK, IdNegocioOK,IdOrdenOK,updateData);
-
-    if (result.status === 200) {
-      return res.status(200).json(result);
-    } else if (result.status === 404) {
-      return res.status(404).json(result);
-    }
+      const { IdInstitutoOK, IdNegocioOK, IdOrdenOK} = req.query;
+      console.log(req.body);
+      const updateData = req.body;
+      const orderUpdate = await ordersService.UpdatePatchOneOrder(IdInstitutoOK, IdNegocioOK, IdOrdenOK, updateData);
+      if (orderUpdate) {
+          orderUpdate.session = null;
+          return res.status(orderUpdate.status).json(orderUpdate);
+      }
   } catch (error) {
-    next(error);
-  }
+      next(error);
+  }
 };
 //FIN PUT PATCH********************************************************************************************* */
 
