@@ -1,4 +1,5 @@
 import ordersModel from "../models/Ordenes";
+import labelsModel from "../models/labels";
 
 import {
   OK,
@@ -312,13 +313,13 @@ export const GetAllLabels = async () => {
   let data = DATA();
 
   try {
-    bitacora.process = "Extraer todas las ordenes";
+    bitacora.process = "Extraer labels";
     data.method = "GET";
     data.api = "/orders/labels";
     data.process = "Extraer todas las labels de la coleccción de cat_labels";
 
-    const allLabels = await ordersModel.find().then((orders) => {
-      if (!orders) {
+    const allLabels = await labelsModel.find().then((labels) => {
+      if (!labels) {
         data.status = 404;
         data.messageDEV = "La base de datos <<NO>> tiene labels configuradas";
         throw Error(data.messageDEV);
@@ -332,6 +333,7 @@ export const GetAllLabels = async () => {
     data.dataRes = allLabels;
 
     bitacora = AddMSG(bitacora, data, "OK", 200, true);
+    console.log("exito")
 
     return OK(bitacora);
   } catch (error) {
@@ -340,7 +342,6 @@ export const GetAllLabels = async () => {
     if (!data.messageDEV) data.messageDEV = message;
     if (!data.dataRes.length === 0) data.dataRes = error;
     data.messageUSR = "La extracción de las labels <<NO>> tuvo exito";
-
     bitacora = AddMSG(bitacora, data, "FAIL");
 
     return FAIL(bitacora);

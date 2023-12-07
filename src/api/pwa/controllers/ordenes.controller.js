@@ -101,8 +101,9 @@ export const DeleteOneOrder = async (req, res, next) => {
 export const GetAllLabels = async (req, res, next) => {
   try {
     const labelsAll = await ordersService.GetAllLabels();
-    if (ordenesAll) {
+    if (labelsAll) {
       return res.status(labelsAll.status).json(labelsAll);
+     
     }
   } catch (error) {
     next(error);
