@@ -11,11 +11,11 @@ const ordenesSchemaPWA = new mongoose.Schema({
   IdTipoOrdenOK: { type: String },
   IdRolOK: { type: String },
   IdPersonaOK: { type: String },
-  ordenes_estatus: [
+  ordenes_estatus: [//Curd solo insertar
     {
-      IdTipoEstatusOK: { type: String },
-      Actual: { type: String },
-      Observacion: { type: String },
+      IdTipoEstatusOK: { type: String }, //Select(Buscar api cat_etiquetas-)
+      Actual: { type: String }, //check box
+      Observacion: { type: String }, //text field multilinia
       detail_row: {
         Activo: { type: String, default: "S" },
         Borrado: { type: String, default: "N" },
@@ -33,12 +33,12 @@ const ordenesSchemaPWA = new mongoose.Schema({
   ],
   ordenes_info_ad: [
     {
-      IdEtiquetaOK: { type: String },
-      IdEtiqueta: { type: String, require: true },
-      Etiqueta: { type: String, require: true },
-      Valor: { type: String, require: true },
-      IdTipoSeccionOK: { type: String, require: true },
-      Secuencia: { type: Number, require: true },
+      IdEtiquetaOK: { type: String }, //TextField
+      IdEtiqueta: { type: String, require: true },//TextField-Requerido
+      Etiqueta: { type: String, require: true }, //TextField-Requerido
+      Valor: { type: String, require: true },//TextField-Requerido
+      IdTipoSeccionOK: { type: String, require: true },//Select-requerido(indicar en que seccion con su valor aparesca)
+      Secuencia: { type: Number, require: true },//SEcuencia 1-n
       detail_row: {
         Activo: { type: String, default: "S" },
         Borrado: { type: String, default: "N" },
