@@ -1,4 +1,5 @@
 import ordersModel from "../models/Ordenes";
+
 import {
   OK,
   FAIL,
@@ -313,13 +314,13 @@ export const GetAllLabels = async () => {
   try {
     bitacora.process = "Extraer todas las ordenes";
     data.method = "GET";
-    data.api = "/orders";
-    data.process = "Extraer todas las odenes de la coleccción de Ordenes";
+    data.api = "/orders/labels";
+    data.process = "Extraer todas las labels de la coleccción de cat_labels";
 
-    const allOrders = await ordersModel.find().then((orders) => {
+    const allLabels = await ordersModel.find().then((orders) => {
       if (!orders) {
         data.status = 404;
-        data.messageDEV = "La base de datos <<NO>> tiene ordenes configuradas";
+        data.messageDEV = "La base de datos <<NO>> tiene labels configuradas";
         throw Error(data.messageDEV);
       }
 
@@ -327,8 +328,8 @@ export const GetAllLabels = async () => {
     });
 
     data.status = 200; //200 = codigo cuando encuentras documentos
-    data.messageUSR = "La extracción de las ordenes <<SI>> tuvo exito";
-    data.dataRes = allOrders;
+    data.messageUSR = "La extracción de las labels <<SI>> tuvo exito";
+    data.dataRes = allLabels;
 
     bitacora = AddMSG(bitacora, data, "OK", 200, true);
 
@@ -338,7 +339,7 @@ export const GetAllLabels = async () => {
     let { message } = error;
     if (!data.messageDEV) data.messageDEV = message;
     if (!data.dataRes.length === 0) data.dataRes = error;
-    data.messageUSR = "La extracción de las ordenes <<NO>> tuvo exito";
+    data.messageUSR = "La extracción de las labels <<NO>> tuvo exito";
 
     bitacora = AddMSG(bitacora, data, "FAIL");
 

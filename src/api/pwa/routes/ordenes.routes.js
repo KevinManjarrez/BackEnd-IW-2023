@@ -4,6 +4,7 @@ import * as ordersController from "../controllers/ordenes.controller";
 const router = Router();
 
 router.get('/', ordersController.GetAllOrders);
+router.get('/labels', ordersController.GetAllLabels);
 router.get('/one', ordersController.GetOneOrderByID);
 router.post('/', ordersController.AddOneOrder);
 router.put('/', ordersController.UpdateOneOrder);
