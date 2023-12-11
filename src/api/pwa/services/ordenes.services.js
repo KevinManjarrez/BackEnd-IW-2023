@@ -1,4 +1,4 @@
-import ordersModel from "../models/Ordenes";
+import ordersModel from "../models/ordenes";
 import labelsModel from "../models/labels";
 import tipoOrdenModel from "../models/tipoOrden";
 import rolModel from "../models/rol";
