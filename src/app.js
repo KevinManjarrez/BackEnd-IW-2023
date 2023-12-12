@@ -1,11 +1,10 @@
-
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 
 //FIC: imports Swagger
 //FIC: imports Routes
-import routeAPI from './api/v1/routes/index';
+import routerAPILabels from './api/labels/routes/index';
 import routerAPIPWA from './api/pwa/routes/index';
 //FIC: imports Middlewares
 
@@ -43,7 +42,7 @@ app.get('/DrFIC', (req,res)=>{
 })
 
 // Routes
-//routeAPI(app);
+routerAPILabels(app);
 routerAPIPWA(app);
 // Swagger Docs
 // Middleware para el manejo de errores
