@@ -19,4 +19,4 @@ const routerAPILabels = (app) => {
   return router;
 };
 
-module.exports = routerAPI;
+module.exports = routerAPILabels;
