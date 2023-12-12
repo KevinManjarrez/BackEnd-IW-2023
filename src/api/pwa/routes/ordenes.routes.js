@@ -4,16 +4,10 @@ import * as ordersController from "../controllers/ordenes.controller";
 const router = Router();
 
 router.get('/', ordersController.GetAllOrders);
-router.get('/labels', ordersController.GetAllLabels);
 router.get('/one', ordersController.GetOneOrderByID);
 router.post('/', ordersController.AddOneOrder);
 router.put('/', ordersController.UpdateOneOrder);
 router.patch('/one', ordersController.UpdatePatchOneOrder);
 router.delete('/', ordersController.DeleteOneOrder);
-
-//Cats
-router.get('/tipoOrden', ordersController.GetTipoOrden);
-router.get('/rol', ordersController.GetRol);
-router.get('/persona', ordersController.GetPersona);
 
 export default router;
