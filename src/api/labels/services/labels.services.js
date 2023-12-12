@@ -18,7 +18,7 @@ export const GetAllLabels = async () => {
   try {
     bitacora.process = "Extraer labels";
     data.method = "GET";
-    data.api = "/orders/labels";
+    data.api = "/labels";
     data.process = "Extraer todas las labels de la coleccción de cat_labels";
 
     const allLabels = await labelsModel.find().then((labels) => {
@@ -55,19 +55,19 @@ export const GetAllLabels = async () => {
 //=========================================FIN GET===========================================================
 
 //==========================================GET ONE BY ID===========================================================S
-export const GetOneLabels = async (IdInstitutoOK, IdNegocioOK) => {
+export const GetOneLabels = async (IdInstitutoOK, IdEtiquetaOK) => {
   let bitacora = BITACORA();
   let data = DATA();
 
   try {
-    bitacora.process = `Obtener Etiqueta por id`;
+    bitacora.process = `Obtener Etiqueta por Instituto y negocio`;
     data.method = "GET ONE LABELS";
-    data.api = `/orders/${IdInstitutoOK}`;
+    data.api = `/labels/${IdInstitutoOK}`;
     data.process = `Obtener una Etiqueta específica de la colección de Labels por IdInstituto y Negocio`;
 
     const oneLabel = await labelsModel.findOne({ 
       IdInstitutoOK: IdInstitutoOK, 
-      IdNegocioOK: IdNegocioOK, 
+      IdEtiquetaOK: IdEtiquetaOK
     });
     if (!oneLabel) {
       data.status = 404;
