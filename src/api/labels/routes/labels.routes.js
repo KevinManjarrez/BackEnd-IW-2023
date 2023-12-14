@@ -4,6 +4,7 @@ import * as labelsController from "../controllers/labels.controller";
 const router = Router();
 
 router.get('/', labelsController.GetAllLabels);
+router.get('/institutes', labelsController.GetAllInstitutes);
 router.get('/one', labelsController.GetOneLabels);
 
 export default router;

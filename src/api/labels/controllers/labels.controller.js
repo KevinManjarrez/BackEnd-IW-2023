@@ -32,3 +32,17 @@ export const GetOneLabels = async (req, res, next) => {
 };
 
 // GET ALL LABELS********************************************************************************************* */
+
+
+
+export const GetAllInstitutes = async (req, res, next) => {
+  try {
+    const labelsAll = await labelsService.GetAllInstitutes();
+    if (labelsAll) {
+      return res.status(labelsAll.status).json(labelsAll);
+     
+    }
+  } catch (error) {
+    next(error);
+  }
+};

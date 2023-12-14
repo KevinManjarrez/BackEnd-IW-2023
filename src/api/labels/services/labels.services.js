@@ -1,5 +1,5 @@
 import labelsModel from "../models/labels";
-
+import institutesModel from "../models/institutes";
 import {
   OK,
   FAIL,
@@ -97,3 +97,46 @@ export const GetOneLabels = async (IdInstitutoOK, IdEtiquetaOK) => {
   }
 };
 //=========================================FIN GET ONE BY ID===========================================================
+
+
+export const GetAllInstitutes = async () => {
+  let bitacora = BITACORA();
+  let data = DATA();
+
+  try {
+    bitacora.process = "Extraer labels";
+    data.method = "GET";
+    data.api = "/labels";
+    data.process = "Extraer todas las labels de la coleccción de cat_labels";
+
+    const allLabels = await institutesModel.find().then((labels) => {
+      if (!labels) {
+        data.status = 404;
+        data.messageDEV = "La base de datos <<NO>> tiene labels configuradas";
+        throw Error(data.messageDEV);
+      }
+
+      return labels;
+    });
+
+    data.status = 200; //200 = codigo cuando encuentras documentos
+    data.messageUSR = "La extracción de las labels <<SI>> tuvo exito";
+    data.dataRes = allLabels;
+
+    bitacora = AddMSG(bitacora, data, "OK", 200, true);
+    console.log("exito")
+
+    return OK(bitacora);
+  } catch (error) {
+    if (!data.status) data.status = error.statusCode;
+    let { message } = error;
+    if (!data.messageDEV) data.messageDEV = message;
+    if (!data.dataRes.length === 0) data.dataRes = error;
+    data.messageUSR = "La extracción de las labels <<NO>> tuvo exito";
+    bitacora = AddMSG(bitacora, data, "FAIL");
+
+    return FAIL(bitacora);
+  } finally {
+    //Haya o no error siempre ejecuta aqui
+  }
+};
