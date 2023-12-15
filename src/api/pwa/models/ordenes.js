@@ -71,6 +71,26 @@ const ordenesSchemaPWA = new mongoose.Schema({
           _id: false,
         },
       ],
+      pedidos_detalle_ps_estatus_v: [
+        {
+          _id: false,
+        },
+      ],
+      pedidos_detalle_ps_estatus_u: [
+        {
+          _id: false,
+        },
+      ],
+      pedidos_detalle_ps_estatus_p: [
+        {
+          _id: false,
+        },
+      ],
+      pedidos_detalle_ps_info_ad: [
+        {
+          _id: false,
+        },
+      ],
       _id: false,
     },
   ],
