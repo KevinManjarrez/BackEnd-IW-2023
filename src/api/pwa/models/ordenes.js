@@ -68,26 +68,101 @@ const ordenesSchemaPWA = new mongoose.Schema({
       SubTotalConIVA: { type: Number },
       pedidos_detalle_ps_estatus_f: [
         {
+          IdTipoEstatusOK: { type: String }, //Select(Buscar api cat_etiquetas-)
+          Actual: { type: String }, //check box
+          Observacion: { type: String }, //text field multilinia
+          detail_row: {
+            Activo: { type: String, default: "S" },
+            Borrado: { type: String, default: "N" },
+            detail_row_reg: [
+              {
+                FechaReg: { type: Date, default: Date.now },
+                UsuarioReg: { type: String },
+                _id: false,
+              },
+            ],
+            _id: false,
+          },
           _id: false,
         },
       ],
       pedidos_detalle_ps_estatus_v: [
         {
+          IdTipoEstatusOK: { type: String }, //Select(Buscar api cat_etiquetas-)
+          Actual: { type: String }, //check box
+          Observacion: { type: String }, //text field multilinia
+          detail_row: {
+            Activo: { type: String, default: "S" },
+            Borrado: { type: String, default: "N" },
+            detail_row_reg: [
+              {
+                FechaReg: { type: Date, default: Date.now },
+                UsuarioReg: { type: String },
+                _id: false,
+              },
+            ],
+            _id: false,
+          },
           _id: false,
         },
       ],
       pedidos_detalle_ps_estatus_u: [
         {
+          IdTipoEstatusOK: { type: String }, //Select(Buscar api cat_etiquetas-)
+          Actual: { type: String }, //check box
+          Observacion: { type: String }, //text field multilinia
+          detail_row: {
+            Activo: { type: String, default: "S" },
+            Borrado: { type: String, default: "N" },
+            detail_row_reg: [
+              {
+                FechaReg: { type: Date, default: Date.now },
+                UsuarioReg: { type: String },
+                _id: false,
+              },
+            ],
+            _id: false,
+          },
           _id: false,
         },
       ],
       pedidos_detalle_ps_estatus_p: [
         {
+          IdTipoEstatusOK: { type: String }, //Select(Buscar api cat_etiquetas-)
+          Actual: { type: String }, //check box
+          Observacion: { type: String }, //text field multilinia
+          detail_row: {
+            Activo: { type: String, default: "S" },
+            Borrado: { type: String, default: "N" },
+            detail_row_reg: [
+              {
+                FechaReg: { type: Date, default: Date.now },
+                UsuarioReg: { type: String },
+                _id: false,
+              },
+            ],
+            _id: false,
+          },
           _id: false,
         },
       ],
       pedidos_detalle_ps_info_ad: [
         {
+          IdTipoEstatusOK: { type: String }, //Select(Buscar api cat_etiquetas-)
+          Actual: { type: String }, //check box
+          Observacion: { type: String }, //text field multilinia
+          detail_row: {
+            Activo: { type: String, default: "S" },
+            Borrado: { type: String, default: "N" },
+            detail_row_reg: [
+              {
+                FechaReg: { type: Date, default: Date.now },
+                UsuarioReg: { type: String },
+                _id: false,
+              },
+            ],
+            _id: false,
+          },
           _id: false,
         },
       ],
